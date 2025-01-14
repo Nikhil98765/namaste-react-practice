@@ -54,3 +54,12 @@
   margin: 20px;
   background: #f0f0f0;
 }
+
+.login-btn {
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.filter {
+  display: flex;
+}

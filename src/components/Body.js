@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import {RestaurantCard} from "./RestaurantCard";
 import {Shimmer} from "./Shimmer";
@@ -6,7 +6,7 @@ import {Shimmer} from "./Shimmer";
 
 export const Body = () => {
 
-  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const listOfRestaurants = useRef([]);
   const [filteredListOfRestaurants, setFilteredListOfRestaurants] = useState([]);
 
   const [searchText, setSearchText] = useState('');
@@ -19,7 +19,7 @@ export const Body = () => {
     const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.956708347221225&lng=77.6610016822815&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
     const data = await response.json();
     const resList = data.data.cards[1].card.card.gridElements.infoWithStyle.restaurants;
-    setListOfRestaurants(resList);
+    listOfRestaurants.current = resList;
     setFilteredListOfRestaurants(resList);
   }
 
@@ -29,6 +29,8 @@ export const Body = () => {
       <Shimmer />
     )
   }
+
+  console.log('body cmp rendered');
 
 
   return (
@@ -41,7 +43,7 @@ export const Body = () => {
           } />
 
           <button onClick={() => {
-            const filteredRestaurants = listOfRestaurants.filter(restaurant => {
+            const filteredRestaurants = listOfRestaurants.current.filter(restaurant => {
               return restaurant.info.name.toLowerCase().includes(searchText.toLowerCase());
             })
             setFilteredListOfRestaurants(filteredRestaurants);
@@ -51,7 +53,7 @@ export const Body = () => {
 
         <button className="filter-btn"
         onClick={() => {
-          const filteredList = listOfRestaurants.filter(item => item.info.avgRating > 4);
+          const filteredList = listOfRestaurants.current.filter(item => item.info.avgRating > 4);
           setFilteredListOfRestaurants(filteredList);
         }}>
           Top Rated Restaurants

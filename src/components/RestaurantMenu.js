@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Shimmer } from "./Shimmer";
 import { useParams } from "react-router-dom";
+
+import { Shimmer } from "./Shimmer";
 import { MENU_URL } from "../utils/constants";
 
 export const RestaurantMenu = () => {
@@ -14,9 +15,8 @@ export const RestaurantMenu = () => {
   }, []);
 
   async function fetchMenuData() {
-    const response = await fetch(MENU_URL + "413468");
+    const response = await fetch(MENU_URL + resId);
     const data = await response.json();
-    console.log("🚀 ~ fetchMenuData ~ data:", data);
     setResData(data);
   }
 
@@ -25,8 +25,7 @@ export const RestaurantMenu = () => {
   }
 
   const { name, cuisines, costForTwoMessage } = resData.data?.cards[2]?.card?.card?.info;
-  const { itemCards } = resData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card.card;
-  console.log("🚀 ~ RestaurantMenu ~ itemCards:", itemCards)
+  const { itemCards } = resData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[1].card.card;
 
   return (
     <div className="menu">

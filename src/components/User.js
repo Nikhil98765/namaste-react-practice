@@ -24,7 +24,7 @@ export const User = ({name}) => {
 
 
   return (
-    <div className="user-card">
+    <div className="user-card m-4 p-4 bg-gray-50 rounded-lg">
       <button onClick={() => {
         setCount(count+1);
       }}>Click</button>

@@ -22,3 +22,24 @@ export const RestaurantCard = ({ resData }) => {
     </div>
   );
 }
+
+/**
+ * Higher order components (pass input component and get another component)
+ * it should be a pure function
+ * https://legacy.reactjs.org/docs/higher-order-components.html
+ *
+ * @param RestaurantCard
+ * @returns {function(*): *}
+ */
+export const withOpenLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black text-white m-2 p-2 rounded-lg">
+          Promoted
+        </label>
+        <RestaurantCard {...props} />
+      </div>
+    )
+  }
+}

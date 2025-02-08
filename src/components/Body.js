@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 
-import {RestaurantCard} from "./RestaurantCard";
+import {RestaurantCard, withOpenLabel} from "./RestaurantCard";
 import {Shimmer} from "./Shimmer";
 import { Link } from "react-router-dom";
 import {useOnlineStatus} from "../hooks/useOnlineStatus";
@@ -37,6 +37,8 @@ export const Body = () => {
       <Shimmer />
     )
   }
+
+  const RestaurantCardPromoted = withOpenLabel(RestaurantCard);
 
   return (
     <div className="body">
@@ -82,7 +84,9 @@ export const Body = () => {
       <div className="res-container flex flex-wrap">
         {filteredListOfRestaurants.map((res) => (
           <Link key={res.info.id} to={"/restaurants/" + res.info.id}>
-            <RestaurantCard resData={res} />
+            {
+              res.info.isOpen ?<RestaurantCardPromoted resData={res}></RestaurantCardPromoted> : <RestaurantCard resData={res} />
+            }
           </Link>
         ))}
       </div>

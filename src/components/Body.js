@@ -1,9 +1,10 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 
 import {RestaurantCard, withOpenLabel} from "./RestaurantCard";
 import {Shimmer} from "./Shimmer";
 import { Link } from "react-router-dom";
 import {useOnlineStatus} from "../hooks/useOnlineStatus";
+import {UserContext} from "../utils/UserContext";
 
 
 export const Body = () => {
@@ -18,6 +19,8 @@ export const Body = () => {
   }, []);
 
   const onlineStatus = useOnlineStatus();
+
+  const {loggedInUser, setUserName} = useContext(UserContext);
 
   async function fetchData() {
     const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.956708347221225&lng=77.6610016822815&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
@@ -79,6 +82,8 @@ export const Body = () => {
           >
             Top Rated Restaurants
           </button>
+          <input value={loggedInUser} type="text" className="border-black border p-2"
+                 onChange={e => setUserName(e.target.value)}/>
         </div>
       </div>
       <div className="res-container flex flex-wrap">

@@ -8,7 +8,7 @@ export const User = ({name}) => {
   // All useEffects will be run for the first time irrespective of the dependencies.
   useEffect(() => {
     const timer = setInterval(() => {
-      console.log('setInterval');
+      // console.log('setInterval');
     }, 1000);
 
     return () => {

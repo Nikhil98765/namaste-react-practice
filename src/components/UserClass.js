@@ -1,4 +1,5 @@
 import React from "react";
+import {UserContext} from "../utils/UserContext";
 
 /**
  *  Lifecycle of React components
@@ -32,7 +33,7 @@ export class UserClass extends React.Component {
   async componentDidMount() {
 
     this.timer = setInterval( () => {
-      console.log('componentDidMount');
+      // console.log('componentDidMount');
     }, 1000);
 
     // console.log(this.props.name + ' component DidMount');
@@ -42,13 +43,13 @@ export class UserClass extends React.Component {
       userInfo:  json
     });
 
-    console.log('render');
+    // console.log('render');
   }
 
   componentDidUpdate(prevProps) {
     // Works same as useEffect with non-empty dependencies array.
     if (this.state.count !== prevProps.count) {
-      console.log('useEffect');
+      // console.log('useEffect');
     }
 
     // console.log(this.props.name + ' component DidUpdate');
@@ -74,6 +75,11 @@ export class UserClass extends React.Component {
         <h2>Name: {name}</h2>
         <h3>Location: Bangalore</h3>
         <h4>Email: {email}</h4>
+        <UserContext.Consumer>
+          {(context) => {
+            return <h1>{context.loggedInUser}</h1>
+          }}
+        </UserContext.Consumer>
         <img src={avatar_url} alt="User Avatar" />
       </div>
     );

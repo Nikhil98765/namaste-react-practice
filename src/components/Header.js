@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import {LOGO_URL} from "../utils/constants";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {useOnlineStatus} from "../hooks/useOnlineStatus";
+import {UserContext} from "../utils/UserContext";
 
 export const Header = () => {
 
   let [btnName, setBtnName] = useState('Login');
+  const {loggedInUser} = useContext(UserContext);
 
   const onlineStatus = useOnlineStatus();
 
@@ -31,7 +33,7 @@ export const Header = () => {
           <li className="px-4">
             <Link to="/grocery">Grocery</Link>
           </li>
-          <li className="px-4">Cart</li>
+          <li className="px-4">{loggedInUser}</li>
           <button
             className="login-btn "
             onClick={() => {

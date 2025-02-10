@@ -1,6 +1,7 @@
 import React, {lazy, Suspense, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
+import {Provider} from "react-redux";
 
 import {Header} from "./components/Header";
 import {Body} from "./components/Body";
@@ -8,6 +9,7 @@ import {Error} from "./components/Error";
 import {Contact} from "./components/Contact";
 import { RestaurantMenu } from './components/RestaurantMenu';
 import {UserContext} from "./utils/UserContext";
+import {AppStore} from "./store/AppStore";
 // import {Grocery} from "./components/Grocery";
 
 
@@ -25,17 +27,19 @@ const AppLayout = () => {
   }, []);
 
   return (
-    // loggedInUser = 'Default User'
-    <UserContext.Provider value={{loggedInUser: userName, setUserName}}>
-    {/*  loggedInUser = 'example name' */}
-    <div className="app">
-      {/*<UserContext.Provider value={{loggedInUser: userName}}>*/}
-        {/*  loggedInUser = 'Nikhil' */}
-      <Header />
-      {/*</UserContext.Provider>*/}
-      <Outlet />
-    </div>
-    </UserContext.Provider>
+    <Provider store={AppStore}>
+      {/* loggedInUser = 'Default User' */}
+      <UserContext.Provider value={{loggedInUser: userName, setUserName}}>
+      {/*  loggedInUser = 'example name' */}
+      <div className="app">
+        {/*<UserContext.Provider value={{loggedInUser: userName}}>*/}
+          {/*  loggedInUser = 'Nikhil' */}
+        <Header />
+        {/*</UserContext.Provider>*/}
+        <Outlet />
+      </div>
+      </UserContext.Provider>
+    </Provider>
   )
 }
 
@@ -51,6 +55,7 @@ const AppLayout = () => {
  */
 const Grocery = lazy(() => import('./components/Grocery'));
 const About = lazy(() =>  import('./components/About').then(module => ({default: module.About})));
+const Cart = lazy(() => import('./components/Cart').then(module => ({default: module.Cart})));
 
 const appRoutes = createBrowserRouter([
   {
@@ -78,6 +83,13 @@ const appRoutes = createBrowserRouter([
           <Suspense fallback={<h1>Loading...</h1>}>
             <Grocery />
           </Suspense>,
+      },
+      {
+        path:'cart',
+        element:
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Cart />
+        </Suspense>
       },
       {
         path: 'restaurants/:resId',

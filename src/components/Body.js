@@ -51,6 +51,7 @@ export const Body = () => {
             type="text"
             className="border border-solid border-black"
             value={searchText}
+            data-testid="searchInput"
             onChange={(e) => setSearchText(e.target.value)}
           />
 
@@ -75,7 +76,7 @@ export const Body = () => {
             className="px-4 py-2 bg-gray-50 rounded-lg"
             onClick={() => {
               const filteredList = listOfRestaurants.current.filter(
-                (item) => item.info.avgRating > 4
+                (item) => item.info.avgRating > 4.5
               );
               setFilteredListOfRestaurants(filteredList);
             }}
